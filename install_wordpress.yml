@@ -85,6 +85,8 @@
       when: mysql_new_root_pass.changed
       notify: restart mysql
 
+
+# Installation de nginx
     - name: Install nginx
       package:
         name: nginx
@@ -95,8 +97,27 @@
         name: nginx
         state: started
 
+# Configuration de nginx
+    - name: Check PHP version
+      command: php --version
+      register: php_version
+    - set_fact:
+        fpm_sock: /run/php/php7.{{ php_version.stdout.split(" ")[1].split(".")[1] }}-fpm.sock
+
+    - name: Create nginx config
+      template:
+        src: templates/nginx/default.j2
+        dest: /etc/nginx/sites-available/default
+      notify: restart nginx
+
   handlers:
+
     - name: restart mysql
       service:
         name: mysql
+        state: restarted
+
+    - name: restart nginx
+      service:
+        name: nginx
         state: restarted
