@@ -159,7 +159,7 @@
 
     - name: Copy WordPress DB
       template:
-        src: templates/mysql/wp-database.sql
+        src: templates/mysql/wp-database.sql.j2
         dest: /tmp/wp-database.sql
       when: db_exist.rc > 0
 
