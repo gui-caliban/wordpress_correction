@@ -151,15 +151,15 @@
       template:
         src: templates/wordpress/wp-config.php.j2
         dest: /var/www/book.example.com/wp-config.php
-        
+
     - name: Does the database exist?
       command: mysql -u root wordpress -e "SELECT ID FROM wordpress.wp_users LIMIT 1;"
       register: db_exist
       ignore_errors: true
 
     - name: Copy WordPress DB
-      copy:
-        src: files/wp-database.sql
+      template:
+        src: templates/wp-database.sql
         dest: /tmp/wp-database.sql
       when: db_exist.rc > 0
 
@@ -169,7 +169,7 @@
         state: import
         name: wordpress
       when: db_exist.rc > 0
-
+    - debug: var=ansible_default_ipv4.address
   handlers:
 
     - name: restart mysql
