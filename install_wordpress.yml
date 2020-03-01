@@ -159,7 +159,7 @@
 
     - name: Copy WordPress DB
       template:
-        src: templates/wp-database.sql
+        src: templates/mysql/wp-database.sql
         dest: /tmp/wp-database.sql
       when: db_exist.rc > 0
 
@@ -169,7 +169,9 @@
         state: import
         name: wordpress
       when: db_exist.rc > 0
+
     - debug: var=ansible_default_ipv4.address
+
   handlers:
 
     - name: restart mysql
