@@ -110,6 +110,23 @@
         dest: /etc/nginx/sites-available/default
       notify: restart nginx
 
+# Installation de Wordpress
+    - name: Unzip WordPress
+      unarchive:
+        src: files/wordpress-5.3.2-fr_FR.zip
+        dest: /tmp
+        creates: /tmp/wordpress/wp-settings.php
+
+    - name: Create project folder
+      file:
+        dest: /var/www/book.example.com
+        state: directory
+
+    - name: Copy WordPress files
+      command: cp -a /tmp/wordpress/. /var/www/book.example.com
+      args:
+        creates: /var/www/book.example.com/wp-settings.php
+
   handlers:
 
     - name: restart mysql
