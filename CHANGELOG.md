@@ -32,3 +32,7 @@ _Comme vu ensemble, je vais me servir des tags git pour séparer les différente
       * Comment de la ligne bind-adresse pour permettre à ansible de se connecté à la base
       * Notion de handler: la Tâche "restart mysql" n'est effectuée que si le fichier de conf mysqld.cnf est modifié.
   * Installation de nginx
+
+## 01.02.00  Configuration de nginx
+* Récupération de la version de PHP via register et travail sur la variable fpm.sock à l'aide de la fonction split.
+* Dépôt du fichier de conf nginx avec configuration du fpm-sock.
