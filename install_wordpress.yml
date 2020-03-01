@@ -134,6 +134,19 @@
       args:
         creates: /var/www/book.example.com/wp-settings.php
 
+# Creation de la base de donnee de wordpress
+    - name: Create WordPress MySQL database
+      mysql_db:
+        name: wordpress
+        state: present
+
+    - name: Create WordPress MySQL user
+      mysql_user:
+        name: wordpress
+        host: localhost
+        password: bananas
+        priv: wordpress.*:ALL
+
   handlers:
 
     - name: restart mysql
