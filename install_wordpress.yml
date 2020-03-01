@@ -7,6 +7,13 @@
     - name: Ping de l ensemble des machines cibles
       ping:
 
+#Outils
+    - name: Install required tools
+      apt:
+        name:
+          - unzip
+        state: present
+
 # Installation de PHP
     - name: Add the ondrej PHP PPA
       apt_repository:
