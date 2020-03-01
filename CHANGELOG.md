@@ -36,3 +36,15 @@ _Comme vu ensemble, je vais me servir des tags git pour séparer les différente
 ## 01.02.00  Configuration de nginx
 * Récupération de la version de PHP via register et travail sur la variable fpm.sock à l'aide de la fonction split.
 * Dépôt du fichier de conf nginx avec configuration du fpm-sock.
+
+## 01.03.00  Installation de WordPress
+* Ajout du fichier source de wordpres dans le répertoire Files
+* Désarchivage du package sur le serveur attention unzip est nécessaire pour pourvoir utiliser le module unarchive.
+* Copie des statiques dans le répertoire du serveur web
+* Création de la base de donnée de wordpress à l'aide des modules mysql_db et mysql_user.
+* Une première installation manuelle nous permet de généré le fichier wp-config.php et de peupler la base de donnée.
+* Automatisation de cette fin d'installation manuelle:
+  * Transformation de wp-config.php en template
+  * Export de la base à l'aide de la comande "mysqldump wordpress > /tmp/wp-database.sql
+  * Transformation du fichier wp-database.sql en template et variabilisation de l'IP du serveur dans ce template à l'aide des facts ansible.
+  * Récréation de l'idempotence, l'import de la base ne se fait que si elle n'existe pas.
