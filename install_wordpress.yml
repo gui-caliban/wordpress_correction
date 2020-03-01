@@ -85,6 +85,16 @@
       when: mysql_new_root_pass.changed
       notify: restart mysql
 
+    - name: Install nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
   handlers:
     - name: restart mysql
       service:
