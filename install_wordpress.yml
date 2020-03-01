@@ -83,7 +83,9 @@
         src: templates/mysql/mysqld.cnf.j2
         dest: /etc/mysql/mysql.conf.d/mysqld.cnf
       when: mysql_new_root_pass.changed
+      notify: restart mysql
 
+  handlers:
     - name: restart mysql
       service:
         name: mysql
