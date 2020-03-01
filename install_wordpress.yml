@@ -1,0 +1,102 @@
+---
+
+- name: ping
+  hosts: wordpress
+  become: yes
+  tasks:
+    - name: Ping de l ensemble des machines cibles
+      ping:
+
+# Installation de PHP
+    - name: Add the ondrej PHP PPA
+      apt_repository:
+        repo: 'ppa:ondrej/php'
+
+    - name: Install PHP
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - php
+        - php-fpm
+        - php-mysql
+        - php-xml
+
+    - name: Remove apache2
+      package:
+        name: apache2
+        state: absent
+
+# Installation de mysql
+    - name: Install Mysql
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python-mysqldb
+        - mysql-server
+
+# Ansibilisation de mysql_secure_installation
+    - name: Generate new root password
+      command: openssl rand -hex 7
+      args:
+        creates: /root/.my.cnf
+      register: mysql_new_root_pass
+
+    - name: Remove anonymous users
+      mysql_user:
+        name: ""
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: Remove test database
+      mysql_db:
+        name: test
+        state: absent
+      when: mysql_new_root_pass.changed
+
+    - name: Output new root password
+      debug:
+        msg: "New root password is {{mysql_new_root_pass.stdout}}"
+      when: mysql_new_root_pass.changed
+
+    - name: Update root password
+      mysql_user:
+        name: root
+        host: "{{ item }}"
+        password: "{{ mysql_new_root_pass.stdout }}"
+      loop:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+      when: mysql_new_root_pass.changed
+
+    - name: Create my.cnf
+      template:
+        src: templates/mysql/my.cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_new_root_pass.changed
+
+    - name: Create mysqld.cnf
+      template:
+        src: templates/mysql/mysqld.cnf.j2
+        dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+      when: mysql_new_root_pass.changed
+      notify: restart mysql
+
+    - name: Install nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+
+  handlers:
+    - name: restart mysql
+      service:
+        name: mysql
+        state: restarted
