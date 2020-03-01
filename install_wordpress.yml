@@ -102,7 +102,7 @@
       command: php --version
       register: php_version
     - set_fact:
-        fpm_sock: /run/php/php{{ php_version.stdout.split(" ")[1] }}-fpm.sock
+        fpm_sock: /run/php/php{{ php_version.stdout.split(" ")[1]split(".")[1]  }}-fpm.sock
 
     - name: Create nginx config
       template:
