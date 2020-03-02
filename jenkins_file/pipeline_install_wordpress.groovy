@@ -7,7 +7,7 @@ pipeline {
 	}
 
   parameters {
-    choice(name: 'VERBOSE', choices: [' ', "-v", "-vv", "-vvv", "-vvvv"], description: "Choice verbosity on logs"),
+    choice(name: 'VERBOSE', choices: [' ', "-v", "-vv", "-vvv", "-vvvv"], description: "Choice verbosity on logs")
     choice(name: 'ENV', choices: ['HOME', "LAB"], description: "Choice your environment")
   }
 
