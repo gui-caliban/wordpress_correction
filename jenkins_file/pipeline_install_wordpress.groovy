@@ -42,6 +42,11 @@ pipeline {
             extras: '${VERBOSE}'
           )
         }
+        stage ('Tests fonctionels') {
+          steps {
+            sh ' echo "Tests Selenium" '
+          }
+        }
       }
     }
   }
