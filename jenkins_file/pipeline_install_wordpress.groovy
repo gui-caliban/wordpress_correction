@@ -7,7 +7,8 @@ pipeline {
 	}
 
   parameters {
-    choice(name: 'VERBOSE', choices: [' ', "-v", "-vv", "-vvv", "-vvvv"], description: "Choice verbosity on logs")
+    choice(name: 'VERBOSE', choices: [' ', "-v", "-vv", "-vvv", "-vvvv"], description: "Choice verbosity on logs"),
+    choice(name: 'ENV', choices: ['HOME', "LAB"], description: "Choice your environment")
   }
 
   stages {
@@ -19,7 +20,7 @@ pipeline {
           ansiblePlaybook (
             colorized: true,
             playbook: 'install_wordpress.yml',
-            inventory: 'inventories/LAB/hosts',
+            inventory: 'inventories/${ENV}/hosts',
             extras: '${VERBOSE}'
           )
         }
