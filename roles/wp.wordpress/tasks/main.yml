@@ -9,13 +9,13 @@
 
 - name: Create project folder
   file:
-    dest: /var/www/book.example.com
+    dest: "/var/www/{{ wp_domain }}"
     state: directory
 
 - name: Copy WordPress files
-  command: cp -a /tmp/wordpress/. /var/www/book.example.com
+  command: "cp -a /tmp/wordpress/. /var/www/{{ wp_domain }}"
   args:
-    creates: /var/www/book.example.com/wp-settings.php
+    creates: "/var/www/{{ wp_domain }}/wp-settings.php"
 
 # Creation de la base de donnee de wordpress
 - name: Create WordPress MySQL database
@@ -33,10 +33,10 @@
 - name: Create wp-config
   template:
     src: wp-config.php.j2
-    dest: /var/www/book.example.com/wp-config.php
+    dest: "/var/www/{{ wp_domain }}/wp-config.php"
 
 - name: Does the database exist?
-  command: mysql -u root {{ database_name }} -e "SELECT ID FROM {{ database_user }}.wp_users LIMIT 1;"
+  command: "mysql -u root {{ database_name }} -e \"SELECT ID FROM {{ database_user }}.wp_users LIMIT 1;\""
   register: db_exist
   ignore_errors: true
 
