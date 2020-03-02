@@ -31,5 +31,5 @@
       database_user: wordpress
       database_password: bananas1234
       wp_domain: book.example.com
-      initial_post_title: Coucou c'est Guigui
+      initial_post_title: Coucou
       initial_post_content: Guigui dit des choses interessantes !
