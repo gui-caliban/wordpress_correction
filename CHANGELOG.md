@@ -48,3 +48,18 @@ _Comme vu ensemble, je vais me servir des tags git pour séparer les différente
   * Export de la base à l'aide de la comande "mysqldump wordpress > /tmp/wp-database.sql
   * Transformation du fichier wp-database.sql en template et variabilisation de l'IP du serveur dans ce template à l'aide des facts ansible.
   * Récréation de l'idempotence, l'import de la base ne se fait que si elle n'existe pas.
+
+## 01.04.00  Réorganisation du projet à l'aide de rôles
+* Création d'un répertoire roles à la racine.
+  * Utilisation de la commande ansible-galaxy sur un serveur où ansible est installé:
+    * ansible-galaxy init wp.php
+    * ansible-galaxy init wp.mysql
+    * ansible-galaxy init wp.nginx
+    * ansible-galaxy init wp.wordpress
+* L'appel des modules correspondant au role doit être dans roles/<nom_du_role>/tasks/main.yml
+* Les templates nécessaires au rôle sont dans roles/<nom_du_role>/templates/
+  * A l'appel du module template, le paramètre src doit juste reprendre le nom du template
+* Les fichiers nécessaires au rôle sont dans roles/<nom_du_role>/files/
+  * A l'appel du module copy, le paramètre src doit juste reprendre le nom du fichier
+* Les handlers necéssaires au role sont situé dans le répertoire roles/<nom_du_role>/handlers/main.yml
+* L'appel des roles dans le playbook se fait grâce au mot-clé "roles:" (voir le playbook install_wordpress.yml)
