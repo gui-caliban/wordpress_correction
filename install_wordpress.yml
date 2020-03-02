@@ -7,30 +7,6 @@
     - name: Ping de l ensemble des machines cibles
       ping:
 
-#Outils
-- name: Installation des outils sur le serveur cible en pre-requis
-  hosts: wordpress
-  become: yes
-  tasks:
-    - name: Install required tools
-      apt:
-        name:
-          - unzip
-        state: present
-
-- name: Installation des dependances sur le serveur web
-  hosts: web
-  become: yes
-  roles:
-    - role: wp.php
-    - role: wp.nginx
-
-- name: Installation des dependances sur le serveur data
-  hosts: data
-  become: yes
-  roles:
-    - role: wp.mysql
-
 - name: Installation de wordpress
   hosts: wordpress
   become: yes

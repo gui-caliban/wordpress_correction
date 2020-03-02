@@ -12,18 +12,33 @@ pipeline {
   }
 
   stages {
-      stage ('Invoke Ansible Playbook install_wordpress.yml') {
+      stage ('Installation des dependances') {
         environment {
           ANSIBLE_FORCE_COLOR = true
         }
         steps {
           ansiblePlaybook (
             colorized: true,
-            playbook: 'install_wordpress.yml',
+            playbook: 'install_dependances.yml',
             inventory: 'inventories/${ENV}/hosts',
             extras: '${VERBOSE}'
           )
         }
       }
     }
+    stages {
+        stage ('Installation de wordpress') {
+          environment {
+            ANSIBLE_FORCE_COLOR = true
+          }
+          steps {
+            ansiblePlaybook (
+              colorized: true,
+              playbook: 'install_wordpress.yml',
+              inventory: 'inventories/${ENV}/hosts',
+              extras: '${VERBOSE}'
+            )
+          }
+        }
+      }
   }
