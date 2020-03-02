@@ -12,6 +12,8 @@ pipeline {
   }
 
   stages {
+      stage ('Vérification de la qualité du code ansible') {
+      }
       stage ('Installation des dependances') {
         environment {
           ANSIBLE_FORCE_COLOR = true
@@ -25,18 +27,18 @@ pipeline {
           )
         }
       }
-        stage ('Installation de wordpress') {
-          environment {
-            ANSIBLE_FORCE_COLOR = true
-          }
-          steps {
-            ansiblePlaybook (
-              colorized: true,
-              playbook: 'install_wordpress.yml',
-              inventory: 'inventories/${ENV}/hosts',
-              extras: '${VERBOSE}'
-            )
-          }
+      stage ('Installation de wordpress') {
+        environment {
+          ANSIBLE_FORCE_COLOR = true
+        }
+        steps {
+          ansiblePlaybook (
+            colorized: true,
+            playbook: 'install_wordpress.yml',
+            inventory: 'inventories/${ENV}/hosts',
+            extras: '${VERBOSE}'
+          )
         }
       }
+    }
   }
