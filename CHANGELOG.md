@@ -63,3 +63,19 @@ _Comme vu ensemble, je vais me servir des tags git pour séparer les différente
   * A l'appel du module copy, le paramètre src doit juste reprendre le nom du fichier
 * Les handlers necéssaires au role sont situé dans le répertoire roles/<nom_du_role>/handlers/main.yml
 * L'appel des roles dans le playbook se fait grâce au mot-clé "roles:" (voir le playbook install_wordpress.yml)
+
+## 01.05.00  Variabilisation
+* Création de deux environnements LAB et HOM à l'aide des répertoires /inventories/<ENV>/
+* Pour chaque fichier hosts, création des groupes de serveurs web, data et wordpress (qui comprend les serveurs appartenant au groupe data et web)
+* Création de l'arborescence de repertoires "group_vars" pour classer les variables en fonction de la portée voulue
+  * Répertoire "group_vars" à la racine de l'arborescence pour les variables communes aux deux environnements
+  * Répertoire "group_vars" sous le répertoire "inventories/<ENV>" pour les varibles spécifiques à un environnement.
+* Exemple de porté de variable (voir slide dédié dans la présentation pour plus de détails):
+  * "database_user" :
+    * Le nom de l'user de la base de donnee est commun à tous les environnements
+    * Sa valeur doit être connue pour le role wp.wordpress
+    * La variable est donc déclarée dans "group_vars/wordpress/wordpress.yml"
+  * "database_name"
+    * Le nom l'instance de la base de donnée est spécifique de l'environnement.
+    * Sa valeur doit être connue pour le role wp.wordpress
+    * La variable est donc déclarée dans "inventories/<ENV>/group_vars/wordpress/wordpress.yml"
