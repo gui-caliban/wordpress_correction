@@ -1,0 +1,3 @@
+---
+
+wp_root_dir: "/var/www/{{ wp_domain }}"

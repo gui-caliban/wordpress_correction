@@ -3,7 +3,7 @@ upstream php {
 }
 server {
         server_name {{ wp_domain }};
-        root /var/www/{{ wp_domain }};
+        root {{ wp_root_dir }};
         index index.php;
         location = /favicon.ico {
                 log_not_found off;

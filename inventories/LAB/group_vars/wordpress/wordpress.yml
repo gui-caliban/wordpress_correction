@@ -1,0 +1,5 @@
+---
+
+database_name: wordpress_lab
+database_password: bananas_lab
+wp_domain: lab.example.com
