@@ -26,3 +26,6 @@
     - role: wp.mysql
     - role: wp.nginx
     - role: wp.wordpress
+      database_name: wordpress_test
+      database_user: wordpress
+      database_password: bananas1234

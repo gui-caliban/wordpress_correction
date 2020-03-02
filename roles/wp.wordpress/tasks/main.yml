@@ -20,15 +20,15 @@
 # Creation de la base de donnee de wordpress
 - name: Create WordPress MySQL database
   mysql_db:
-    name: wordpress
+    name: "{{ database_name }}"
     state: present
 
 - name: Create WordPress MySQL user
   mysql_user:
-    name: wordpress
+    name: "{{ database_user }}"
     host: localhost
-    password: bananas
-    priv: wordpress.*:ALL
+    password: "{{ database_password }}"
+    priv: "{{ database_name }}".*:ALL
 
 - name: Create wp-config
   template:
@@ -36,7 +36,7 @@
     dest: /var/www/book.example.com/wp-config.php
 
 - name: Does the database exist?
-  command: mysql -u root wordpress -e "SELECT ID FROM wordpress.wp_users LIMIT 1;"
+  command: mysql -u root {{ database_name }} -e "SELECT ID FROM {{ database_user }}.wp_users LIMIT 1;"
   register: db_exist
   ignore_errors: true
 
@@ -50,5 +50,5 @@
   mysql_db:
     target: /tmp/wp-database.sql
     state: import
-    name: wordpress
+    name: "{{ database_name }}"
   when: db_exist.rc > 0
