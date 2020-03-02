@@ -25,8 +25,6 @@ pipeline {
           )
         }
       }
-    }
-    stages {
         stage ('Installation de wordpress') {
           environment {
             ANSIBLE_FORCE_COLOR = true
