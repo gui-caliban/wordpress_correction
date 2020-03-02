@@ -13,6 +13,9 @@ pipeline {
 
   stages {
       stage ('Vérification de la qualité du code ansible') {
+        steps {
+          sh ' echo "Tests ansible-lint" '
+        }
       }
       stage ('Installation des dependances') {
         environment {
