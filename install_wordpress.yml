@@ -25,6 +25,7 @@
     - role: wp.php
     - role: wp.mysql
     - role: wp.nginx
+      wp_domain: book.example.com
     - role: wp.wordpress
       database_name: wordpress_test
       database_user: wordpress
