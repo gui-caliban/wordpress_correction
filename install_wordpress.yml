@@ -18,18 +18,21 @@
           - unzip
         state: present
 
-- name: Appel des roles d installation des dependances et de wordpress
-  hosts: wordpress
+- name: Installation des dependances sur le serveur web
+  hosts: web
   become: yes
   roles:
     - role: wp.php
-    - role: wp.mysql
     - role: wp.nginx
-      wp_domain: book.example.com
+
+- name: Installation des dependances sur le serveur data
+  hosts: data
+  become: yes
+  roles:
+    - role: wp.mysql
+
+- name: Installation de wordpress
+  hosts: wordpress
+  become: yes
+  roles:
     - role: wp.wordpress
-      database_name: wordpress_test
-      database_user: wordpress
-      database_password: bananas1234
-      wp_domain: book.example.com
-      initial_post_title: Coucou
-      initial_post_content: Guigui dit des choses interessantes !
