@@ -79,3 +79,9 @@ _Comme vu ensemble, je vais me servir des tags git pour séparer les différente
     * Le nom l'instance de la base de donnée est spécifique de l'environnement.
     * Sa valeur doit être connue pour le role wp.wordpress
     * La variable est donc déclarée dans "inventories/<ENV>/group_vars/wordpress/wordpress.yml"
+
+## 01.06.00  Pipeline groovy
+* Introduction à la notion de Pipeline:
+  * Création du répertoire jenkinsfile à la racine et du fichier pipeline_install_wordpress.groovy. Pour rappel le fichier .groovy reprend toute les étapes du job freestyle et le traduit en code (qui est donc versionable)
+   * Séparation du playbook en 2 pour faire apparaitre une étape d'installation des dépendances et une étape d'installation de wordpress dans la pipeline.
+   * Ajout d'étapes vides dans le pipeline pour représenter l'ajout de test.
