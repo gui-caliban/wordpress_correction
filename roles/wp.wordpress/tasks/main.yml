@@ -28,7 +28,7 @@
     name: "{{ database_user }}"
     host: localhost
     password: "{{ database_password }}"
-    priv: "{{ database_name }}".*:ALL
+    priv: "{{ database_name }}.*:ALL"
 
 - name: Create wp-config
   template:
